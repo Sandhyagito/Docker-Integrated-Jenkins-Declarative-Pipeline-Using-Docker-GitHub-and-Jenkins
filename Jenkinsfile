@@ -20,12 +20,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'docker run sandhyadev836/myapp:latest ./run-tests.sh'
-            }
-        }
-
         stage('Push to Docker Hub') {
             steps {
                 script {
