@@ -1,9 +1,11 @@
 **Automating Docker Image Build and Deployment with Jenkins Declarative Pipeline, GitHub, and Webhooks**
 
 Overview:
+
 This project demonstrates how to automate the build and deployment process using Jenkins, Docker, GitHub, and webhooks. By setting up a declarative Jenkins pipeline, we’ll automate the process of building a Docker image from a GitHub repository, running a simple Node.js application, and pushing the Docker image to Docker Hub.
 
 Objective:
+
 The objective of this project is to:
 
 Automate the build and deployment process using Jenkins.
@@ -39,23 +41,8 @@ Use vi or any text editor to add the following content to the files.
 
 dockerfile
 
-// Use an official Node.js runtime as a parent image
-FROM node:14
+![image](https://github.com/user-attachments/assets/c9db6744-d03a-48f7-aafd-39f11250c0eb)
 
-// Set the working directory
-WORKDIR /usr/src/app
-
-// Copy the Dockerfile and Jenkinsfile (for simplicity in this demo)
-COPY Dockerfile Jenkinsfile ./
-
-// Create a simple Node.js application
-RUN echo "console.log('Hello, Jenkins and Docker!');" > app.js
-
-// Expose the application port
-EXPOSE 8080
-
-// Command to run the application
-CMD ["node", "app.js"]
 
 3. Jenkinsfile Content:
 
@@ -117,17 +104,20 @@ Click "Save" to store your pipeline configuration.
 <img width="795" alt="jenkins pipeline success" src="https://github.com/user-attachments/assets/79ea4e40-b339-4fdf-a2ab-6e090ac66525">
 
 6. Configure GitHub Webhook:
+
 Go to your GitHub repository settings.
 Under "Webhooks", click "Add webhook".
 Enter the Jenkins URL followed by /github-webhook/ (e.g., http://your-jenkins-url/github-webhook/).
 
 7. Testing the Automation:
+
 Make a change in the repository (e.g., update the README).
 Commit and push the change. Jenkins should automatically trigger the pipeline.
 
 <img width="557" alt="automate CI trigger" src="https://github.com/user-attachments/assets/bb1dc9ec-946f-45df-9b62-4b857197f0d1">
 
 Outcome:
+
 This project automated the process of building a Docker image, running a simple Node.js application, and pushing the image to Docker Hub using Jenkins Declarative Pipeline and webhooks. The integration of GitHub webhooks ensures the process is fully automated upon every code change.
 
 <img width="928" alt="Dockerhub" src="https://github.com/user-attachments/assets/cef5def4-9872-4f95-b7f6-f64e1f454013">
@@ -135,9 +125,11 @@ This project automated the process of building a Docker image, running a simple 
 ![image](https://github.com/user-attachments/assets/f42d76f5-484c-49aa-8f92-73011436772a)
 
 Troubleshooting:
+
 Git Checkout Issues: If Jenkins fails to fetch the repository, ensure the correct branch is specified and the repository URL is correct.
 Docker Build Errors: Ensure Docker is correctly configured in Jenkins and that the Dockerfile syntax is valid.
 Webhook Not Triggering: Double-check the webhook URL in GitHub and make sure Jenkins is accessible from GitHub.
 
 Conclusion:
+
 This project provided hands-on experience in setting up a fully automated CI/CD pipeline using Jenkins, Docker, and GitHub. The integration of webhooks showcases how continuous integration can be achieved efficiently, enabling seamless deployments.
