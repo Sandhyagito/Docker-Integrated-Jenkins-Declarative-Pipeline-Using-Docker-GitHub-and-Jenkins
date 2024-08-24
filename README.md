@@ -39,22 +39,22 @@ Use vi or any text editor to add the following content to the files.
 
 dockerfile
 
-# Use an official Node.js runtime as a parent image
+// Use an official Node.js runtime as a parent image
 FROM node:14
 
-# Set the working directory
+// Set the working directory
 WORKDIR /usr/src/app
 
-# Copy the Dockerfile and Jenkinsfile (for simplicity in this demo)
+// Copy the Dockerfile and Jenkinsfile (for simplicity in this demo)
 COPY Dockerfile Jenkinsfile ./
 
-# Create a simple Node.js application
+// Create a simple Node.js application
 RUN echo "console.log('Hello, Jenkins and Docker!');" > app.js
 
-# Expose the application port
+// Expose the application port
 EXPOSE 8080
 
-# Command to run the application
+// Command to run the application
 CMD ["node", "app.js"]
 
 3. Jenkinsfile Content:
