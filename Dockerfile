@@ -2,6 +2,7 @@
 FROM node:14
 
 # Set the working directory
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy the Dockerfile and Jenkinsfile (as placeholders)
