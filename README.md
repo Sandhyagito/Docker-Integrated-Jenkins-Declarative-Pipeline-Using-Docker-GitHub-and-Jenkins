@@ -47,7 +47,7 @@ dockerfile
 3. Jenkinsfile Content:
 
 ![image](https://github.com/user-attachments/assets/2dbc9277-ae90-498b-a0d7-4a591ec804a2)
-![image](https://github.com/user-attachments/assets/0a1f5cd4-d2de-4fa7-acc7-dd0adef03dbc)
+ ![image](https://github.com/user-attachments/assets/0a1f5cd4-d2de-4fa7-acc7-dd0adef03dbc)
 
 
 4. Commit and Push Changes to GitHub:
