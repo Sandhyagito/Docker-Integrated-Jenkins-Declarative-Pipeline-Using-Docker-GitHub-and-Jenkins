@@ -46,38 +46,10 @@ dockerfile
 
 3. Jenkinsfile Content:
 
-pipeline {
-    agent any
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('your-dockerhub-credentials-id')
-    }
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/YourUsername/YourRepo.git'
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build('your-dockerhub-username/yourapp:latest')
-                }
-            }
-        }
-        stage('Push to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        docker.image('your-dockerhub-username/yourapp:latest').push()
-                    }
-                }
-            }
-        }
-    }
-    triggers {
-        githubPush()
-    }
-}
+![image](https://github.com/user-attachments/assets/2dbc9277-ae90-498b-a0d7-4a591ec804a2)
+![image](https://github.com/user-attachments/assets/0a1f5cd4-d2de-4fa7-acc7-dd0adef03dbc)
+
+
 4. Commit and Push Changes to GitHub:
 
 git add Dockerfile Jenkinsfile
