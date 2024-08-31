@@ -4,15 +4,12 @@
   "description": "A simple Node.js app to demonstrate Jenkins and Docker integration",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "mocha"
+    "start": "node app.js"
   },
   "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "mocha": "^9.2.2"
   }
 }
+

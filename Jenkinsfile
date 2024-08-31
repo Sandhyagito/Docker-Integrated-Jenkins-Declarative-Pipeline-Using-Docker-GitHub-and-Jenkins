@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        EC2_CREDENTIALS = credentials('ec2-credentials-id')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
     }
 
@@ -19,12 +18,12 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
+        stage('Trivy Scan') {
             steps {
                 script {
-                    docker.image('sandhyadev836/mynodejs-webapp:latest').inside {
-                        sh 'npm install'
-                        sh 'npm test'
+                    // Run Trivy scan on the built image
+                    docker.image('aquasec/trivy:latest').inside {
+                        sh 'trivy image --no-progress sandhyadev836/mynodejs-webapp:latest'
                     }
                 }
             }
