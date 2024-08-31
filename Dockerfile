@@ -1,19 +1,19 @@
-# Use a lightweight Node.js image as a parent image
+# Use an official Node.js runtime as a parent image
 FROM node:14
 
-# Set the working directory
-RUN mkdir -p /usr/src/app
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy the Dockerfile and Jenkinsfile (as placeholders)
-COPY Dockerfile Jenkinsfile ./
+# Copy the package.json and install dependencies
+COPY package*.json ./
+RUN npm install
 
-# Create a basic script as a placeholder
-RUN echo "console.log('Hello, Jenkins and Docker!');" > app.js
+# Copy the rest of the application code
+COPY . .
 
-# Expose a default application port
-EXPOSE 8080
+# Expose the application port
+EXPOSE 3000
 
-# Command to run the application
+# Start the application
 CMD ["node", "app.js"]
 
