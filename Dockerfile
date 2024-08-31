@@ -4,25 +4,22 @@ FROM node:14
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Create a non-root user and switch to it
-RUN useradd -ms /bin/sh myuser
-USER myuser
+# Change ownership of the /usr/src/app directory to the node user
+RUN chown -R node:node /usr/src/app
 
-# Create npm directory with correct permissions
-RUN mkdir -p /home/myuser/.npm && chown -R myuser:myuser /home/myuser/.npm
+# Switch to the node user
+USER node
 
-# Copy package.json and package-lock.json first to leverage Docker caching
-COPY --chown=myuser:myuser package*.json ./
-
-# Install dependencies
+# Copy the package.json and install dependencies
+COPY --chown=node:node package*.json ./
 RUN npm install
 
 # Copy the rest of the application code
-COPY --chown=myuser:myuser . .
+COPY --chown=node:node . .
 
 # Expose the application port
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "app.js"]
+CMD [ "node", "app.js" ]
 
