@@ -21,7 +21,6 @@ pipeline {
         stage('Trivy Scan') {
             steps {
                 script {
-                    // Run Trivy scan with reduced scope
                     docker.image('aquasec/trivy:latest').inside {
                         sh 'trivy image --severity CRITICAL,HIGH --no-progress sandhyadev836/mynodejs-webapp:latest'
                     }
