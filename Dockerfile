@@ -13,12 +13,17 @@ RUN npm config set cache /tmp/.npm --global && mkdir -p /tmp/.npm
 # Change ownership of the npm cache directory
 RUN chown -R node:node /tmp/.npm
 
-# Install dependencies as the node user
-USER node
+# Install dependencies as root
 RUN npm install
 
 # Copy the rest of the application code
-COPY --chown=node:node . .
+COPY . .
+
+# Change ownership of the application directory
+RUN chown -R node:node /usr/src/app
+
+# Switch to the non-root user
+USER node
 
 # Expose the application port
 EXPOSE 3000
