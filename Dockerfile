@@ -4,23 +4,18 @@ FROM node:14
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy the package.json and install dependencies as root user
+# Copy the package.json and package-lock.json (if you have it)
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Create a non-root user and set permissions
-RUN useradd -ms /bin/sh myuser
-RUN chown -R myuser:myuser /usr/src/app
-
-# Switch to non-root user
-USER myuser
-
 # Copy the rest of the application code
-COPY --chown=myuser:myuser . .
+COPY . .
 
 # Expose the application port
 EXPOSE 3000
 
-# Start the application
-CMD [ "node", "app.js" ]
+# Command to run the application
+CMD ["node", "app.js"]
 
