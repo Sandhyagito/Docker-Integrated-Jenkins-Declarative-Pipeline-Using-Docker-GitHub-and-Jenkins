@@ -7,8 +7,8 @@ WORKDIR /usr/src/app
 # Copy the package.json and package-lock.json (if you have it)
 COPY package*.json ./
 
-# Set the npm cache directory
-RUN npm config set cache /tmp/.npm --global
+# Set the npm cache directory and create it
+RUN npm config set cache /tmp/.npm --global && mkdir -p /tmp/.npm
 
 # Change ownership of the npm cache directory
 RUN chown -R node:node /tmp/.npm
