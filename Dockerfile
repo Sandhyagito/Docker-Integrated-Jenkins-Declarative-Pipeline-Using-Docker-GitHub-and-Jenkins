@@ -1,30 +1,21 @@
+# Use the official Node.js image
 FROM node:14
 
-# Set the working directory
+# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json first
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Set npm cache directory and permissions
-RUN npm config set cache /home/node/.npm --global && \
-    mkdir -p /home/node/.npm && \
-    chown -R node:node /home/node/.npm
-
 # Install dependencies
-RUN npm ci
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
-
-# Change ownership of the app directory to the node user
-RUN chown -R node:node /usr/src/app
-
-USER node
 
 # Expose the port the app runs on
 EXPOSE 3000
 
 # Start the application
-CMD [ "node", "app.js" ]
+CMD ["node", "app.js"]
 
