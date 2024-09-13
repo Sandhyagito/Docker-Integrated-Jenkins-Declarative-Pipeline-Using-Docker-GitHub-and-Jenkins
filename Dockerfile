@@ -7,24 +7,20 @@ WORKDIR /usr/src/app
 # Copy the package.json and package-lock.json (if you have it)
 COPY package*.json ./
 
-# Set the npm cache directory and install dependencies as root
-RUN npm config set cache /tmp/.npm --global && mkdir -p /tmp/.npm \
-    && chmod -R 777 /tmp/.npm \
-    && npm install
+# Set the npm cache directory to a directory owned by the node user and create it
+RUN npm config set cache /home/node/.npm --global && mkdir -p /home/node/.npm
+
+# Install dependencies as root
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
 
-# Set permissions for the working directory and npm cache
-RUN chmod -R 777 /usr/src/app
-
-# Switch to the non-root user
-#USER node
+# Set less permissive permissions for the working directory and npm cache
+RUN chmod -R 755 /usr/src/app /home/node/.npm
 
 # Expose the application port
 EXPOSE 3000
 
-# Command to run the application
+# Command to run the application (as root)
 CMD ["node", "app.js"]
-
-
