@@ -4,7 +4,7 @@ pipeline {
     environment {
         EC2_CREDENTIALS = credentials('ec2-credential')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credential')
-        EC2_INSTANCE_IP = '54.197.14.84'  // Replace with your EC2 instance IP address
+        EC2_INSTANCE_IP = '54.173.65.249'  // Replace with your EC2 instance IP address
     }
 
     stages {
@@ -28,6 +28,7 @@ pipeline {
                             'npm_config_cache=/tmp/.npm',
                             'HOME=/usr/src/app'
                         ]) {
+                            sh 'chown -R node:node /tmp/.npm'  // Remove sudo
                             sh 'npm install'
                             sh 'npm test'
                         }
