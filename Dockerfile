@@ -1,26 +1,31 @@
-# Use an official Node.js runtime as a parent image
+# Use the official Node.js image
 FROM node:14
 
-# Set the working directory inside the container
+# Create app directory
 WORKDIR /usr/src/app
 
-# Copy the package.json and package-lock.json (if you have it)
+# Copy package.json and package-lock.json first to install dependencies
 COPY package*.json ./
 
-# Set the npm cache directory to a directory owned by the node user and create it
-RUN npm config set cache /home/node/.npm --global && mkdir -p /home/node/.npm
+# Set npm cache directory and fix permissions
+RUN npm config set cache /home/node/.npm --global
+RUN mkdir -p /home/node/.npm && chown -R node:node /home/node/.npm
 
-# Install dependencies as root
-RUN npm install
+# Install dependencies using npm ci
+RUN npm ci
 
 # Copy the rest of the application code
 COPY . .
 
-# Set less permissive permissions for the working directory and npm cache
-RUN chmod -R 755 /usr/src/app /home/node/.npm
+# Set the correct permissions
+RUN chown -R node:node /usr/src/app
 
-# Expose the application port
-EXPOSE 3000
+# Switch to the node user
+USER node
 
-# Command to run the application (as root)
-CMD ["node", "app.js"]
+# Expose the port
+EXPOSE 8080
+
+# Start the app
+CMD ["npm", "start"]
+
