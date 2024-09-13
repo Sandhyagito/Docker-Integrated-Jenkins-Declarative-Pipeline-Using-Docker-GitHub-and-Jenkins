@@ -1,4 +1,3 @@
-# Use the official Node.js image
 FROM node:14
 
 # Set working directory
@@ -10,7 +9,10 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Ensure mocha is executable
+RUN chmod +x ./node_modules/.bin/mocha
+
+# Copy application code
 COPY . .
 
 # Expose the port the app runs on

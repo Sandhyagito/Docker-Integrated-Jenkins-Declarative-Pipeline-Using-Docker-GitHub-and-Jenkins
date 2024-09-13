@@ -14,7 +14,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from Git
                 git branch: 'main', url: 'https://github.com/Sandhyagito/Jenkins-Declarative-Pipeline-Using-Docker-GitHub-and-Jenkins.git'
             }
         }
@@ -31,8 +30,8 @@ pipeline {
             steps {
                 script {
                     docker.image('my-node-app:test').inside {
-                        // Assuming you have a test script in your package.json
-                        sh 'npm test'
+                        sh 'ls -la ./node_modules/.bin'  // List files to check permissions
+                        sh 'npm test --verbose'          // Run tests with verbose output
                     }
                 }
             }
