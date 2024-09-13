@@ -24,8 +24,13 @@ pipeline {
             steps {
                 script {
                     docker.image('sandhyadev836/mynodejs-webapp:latest').inside {
-                        sh 'npm install'
-                        sh 'npm test'
+                        withEnv([
+                            'npm_config_cache=/tmp/.npm',
+                            'HOME=/usr/src/app'
+                        ]) {
+                            sh 'npm install'
+                            sh 'npm test'
+                        }
                     }
                 }
             }
