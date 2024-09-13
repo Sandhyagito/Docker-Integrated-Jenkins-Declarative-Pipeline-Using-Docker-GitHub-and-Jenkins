@@ -16,6 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    // Build the Docker image with the latest tag
                     docker.build('sandhyadev836/mynodejs-webapp:latest')
                 }
             }
@@ -24,14 +25,9 @@ pipeline {
             steps {
                 script {
                     docker.image('sandhyadev836/mynodejs-webapp:latest').inside {
-                        withEnv([
-                            'npm_config_cache=/tmp/.npm',
-                            'HOME=/usr/src/app'
-                        ]) {
-                            sh 'chown -R node:node /tmp/.npm'  // Remove sudo
-                            sh 'npm install'
-                            sh 'npm test'
-                        }
+                        // Ensure npm installs dependencies and runs tests inside the container
+                        sh 'npm install'
+                        sh 'npm test'
                     }
                 }
             }
@@ -40,6 +36,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credential') {
+                        // Push the built image to Docker Hub
                         docker.image('sandhyadev836/mynodejs-webapp:latest').push('latest')
                     }
                 }
@@ -52,14 +49,14 @@ pipeline {
                     # Use sshpass to avoid interactive prompts for the SSH password
                     sshpass -p "$EC2_PASSWORD" ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_INSTANCE_IP << 'EOF'
                     
-                    # Pull the latest Docker image
+                    # Pull the latest Docker image on EC2 instance
                     docker pull sandhyadev836/mynodejs-webapp:latest
 
                     # Stop and remove any existing container with the same name
                     docker stop mynodejs-webapp || true
                     docker rm mynodejs-webapp || true
 
-                    # Run the new container
+                    # Run the new container (ensure the app is running as expected)
                     docker run -d --name mynodejs-webapp -p 8080:3000 sandhyadev836/mynodejs-webapp:latest
                     EOF
                     '''
@@ -69,6 +66,7 @@ pipeline {
     }
     post {
         always {
+            // Clean up the workspace
             cleanWs()
         }
         success {
