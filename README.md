@@ -105,6 +105,7 @@ Webhook Not Triggering: Double-check the webhook URL in GitHub and make sure Jen
 Conclusion:
 
 This project provided hands-on experience in setting up a fully automated CI/CD pipeline using Jenkins, Docker, and GitHub. The integration of webhooks showcases how continuous integration can be achieved efficiently, enabling seamless deployments.
+<<<<<<< HEAD
 Triggering webhook
 Triggering webhook
 Triggering webhook
@@ -112,4 +113,8 @@ Triggering webhook
 Triggering webhook
 Triggering webhook
 Triggering webhook
+Triggering webhook
+=======
+
+>>>>>>> d056a67a306ed6a37dcfc98ffa6fdaf0bdf195c8
 Triggering webhook
