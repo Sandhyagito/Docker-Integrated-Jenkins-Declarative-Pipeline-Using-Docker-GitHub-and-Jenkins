@@ -26,9 +26,8 @@ Before getting started, make sure you have the following:
 - Docker Hub account
 - AWS EC2 instance (Ubuntu preferred)
 - Jenkins installed on your EC2 instance
-- Node.js and npm installed on your local machine
 - GitHub account for version control
-- Jenkins plugins: Docker Pipeline, SSH Agent, Git Plugin
+- Jenkins plugins: Docker Pipeline, Git Plugin, GitHub Integration Plugin, SSH Agent Plugin
 
 ## Setup Instructions
 
