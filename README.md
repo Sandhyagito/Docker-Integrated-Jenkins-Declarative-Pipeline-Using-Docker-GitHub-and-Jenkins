@@ -1,5 +1,3 @@
-![Alt text]("C:\Users\sandh\Downloads\1725452072359.gif")
-
 
 # 🚀 Declarative Jenkins Pipeline Using Docker
 
@@ -136,6 +134,11 @@ COPY . .
 EXPOSE 3000
 CMD [ "node", "app.js" ]
 ```
+
+### Pipeline Flow Diagram
+
+![Jenkins Pipeline Flow](C:\Users\sandh\Downloads/1725452072359.gif) <!-- Adjust the path accordingly -->
+
 ### Usage
 
 Push code to GitHub to trigger the Jenkins pipeline.
