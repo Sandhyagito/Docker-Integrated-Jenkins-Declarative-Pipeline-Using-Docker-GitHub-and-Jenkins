@@ -61,13 +61,13 @@ Add the Jenkinsfile from this repository to define the pipeline stages.
 
 ### Pipeline Stages
 
-The Jenkins pipeline consists of the following stages:
+This project uses a Jenkinsfile to automate the CI/CD process for the Node.js web application. The pipeline consists of several key stages:
 
-Checkout: Clones the GitHub repository.
-Build: Builds the Docker image for the Node.js application.
-Test: Runs basic tests (e.g., npm test).
-Push to Docker Hub: Pushes the Docker image to Docker Hub.
-Deploy to EC2: Deploys the application to an EC2 instance via SSH.
+- **Checkout**: Retrieves the code from the GitHub repository.
+- **Build Docker Image** Builds the Docker image for the Node.js application.
+- **Run Tests**: Runs basic tests in a Docker container (e.g., npm test).
+- **Push to Docker Hub**: Pushes the Docker image to Docker Hub for deployment.
+- **Deploy to EC2**: Deploys the application(container) to an EC2 instance via SSH.
 
 Jenkinsfile and Dockerfile
 Jenkinsfile
