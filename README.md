@@ -71,7 +71,7 @@ This project uses a Jenkinsfile to automate the CI/CD process for the Node.js we
 
 ### Jenkinsfile and Dockerfile
 
-## Jenkinsfile
+### Jenkinsfile
 
 The Jenkinsfile defines the pipeline stages in a declarative syntax:
 
@@ -120,7 +120,7 @@ pipeline {
 }
 ```
 
-## Dockerfile
+### Dockerfile
 
 The Dockerfile defines how the Node.js application will be containerized:
 
