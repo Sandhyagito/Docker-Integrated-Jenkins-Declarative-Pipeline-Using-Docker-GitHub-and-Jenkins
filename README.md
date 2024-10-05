@@ -37,15 +37,11 @@ Before getting started, make sure you have the following:
 git clone https://github.com/yourusername/project-name.git
 cd project-name
 
-2. Jenkins Setup:
+### 2. Jenkins Setup:
+
 Install Jenkins on your EC2 instance.
 Install the necessary plugins: Docker Pipeline, SSH Agent, and Git.
 Configure credentials for Docker Hub in Jenkins (under Manage Jenkins > Manage Credentials).
 Configure SSH access to your EC2 instance for deployment.
-3. Docker Setup:
-Ensure Docker is installed and running on your EC2 instance.
 
-Build the Docker image for your Node.js app using the Dockerfile in the repo:
 
-```bash
-docker build -t my-nodejs-app .
