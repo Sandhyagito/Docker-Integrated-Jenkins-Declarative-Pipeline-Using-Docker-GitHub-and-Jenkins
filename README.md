@@ -1,3 +1,6 @@
+![Alt text]("C:\Users\sandh\Downloads\1725452072359.gif")
+
+
 # 🚀 Declarative Jenkins Pipeline Using Docker
 
 This project demonstrates how to automate the build and deployment of a Dockerized Node.js application using a Declarative Jenkins Pipeline. The project covers setting up Jenkins, Docker, and deploying the application to an EC2 instance, following a Continuous Integration/Continuous Deployment (CI/CD) process.
