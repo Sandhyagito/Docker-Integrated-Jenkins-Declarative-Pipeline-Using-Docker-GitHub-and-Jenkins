@@ -36,6 +36,7 @@ Before getting started, make sure you have the following:
 ```bash
 git clone https://github.com/yourusername/project-name.git
 cd project-name
+```
 
 ### 2. Jenkins Setup:
 
