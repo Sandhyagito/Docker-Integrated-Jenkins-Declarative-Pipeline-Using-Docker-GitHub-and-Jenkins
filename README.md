@@ -137,7 +137,7 @@ CMD [ "node", "app.js" ]
 
 ### Pipeline Flow Diagram
 
-![Jenkins Pipeline Flow](C:\Users\sandh\Downloads/1725452072359.gif) <!-- Adjust the path accordingly -->
+![1725452072359](https://github.com/user-attachments/assets/55651bd4-d5fd-4543-82fa-54750d5b27f0)
 
 ### Usage
 
