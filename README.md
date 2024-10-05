@@ -1,121 +1,154 @@
-**Automating Docker Image Build and Deployment with Jenkins Declarative Pipeline, GitHub, and Webhooks**
+**🚀 Declarative Jenkins Pipeline Using Docker**
 
-Overview:
+This project demonstrates how to automate the build and deployment of a Dockerized Node.js application using a Declarative Jenkins Pipeline. The project covers setting up Jenkins, Docker, and deploying the application to an EC2 instance, following a Continuous Integration/Continuous Deployment (CI/CD) process.
 
-This project demonstrates how to automate the build and deployment process using Jenkins, Docker, GitHub, and webhooks. By setting up a declarative Jenkins pipeline, we’ll automate the process of building a Docker image from a GitHub repository, running a simple Node.js application, and pushing the Docker image to Docker Hub.
+**Table of Contents**
+Project Overview
+Prerequisites
+Setup Instructions
+Pipeline Stages
+Jenkinsfile and Dockerfile
+Usage
+Troubleshooting
+Contributing
+License
+Project Overview
+In this project, you will build a CI/CD pipeline using Jenkins to automate the testing, building, and deployment of a Node.js application inside a Docker container. The project focuses on the integration of Jenkins and Docker, using a declarative pipeline to streamline deployment to an EC2 instance. The Jenkins pipeline will automatically push Docker images to Docker Hub and deploy the application on an EC2 server.
 
-Objective:
+**Prerequisites**
+Before getting started, make sure you have the following:
 
-The objective of this project is to:
-
-Automate the build and deployment process using Jenkins.
-Create a Jenkins pipeline that builds a Docker image from a GitHub repository, runs a simple Node.js application, and pushes the image to Docker Hub.
-Integrate Docker with Jenkins for a streamlined CI/CD pipeline.
-Automate the entire process using GitHub webhooks.
-
-Prerequisites:
-
-Jenkins installed (running on an EC2 instance or a local machine).
-Docker installed and configured in Jenkins.
-A GitHub account and a repository for the project.
-Jenkins plugins: Git, Docker Pipeline, GitHub Integration.
-
-Step-by-Step Instructions:
-
-1. Setting Up the GitHub Repository:
-
-Create a new repository on GitHub.
-
-Clone the repository locally:
-
-git clone https://github.com/YourUsername/YourRepo.git
-cd YourRepo
-
-Create the Dockerfile and Jenkinsfile:
-
-touch Dockerfile Jenkinsfile
-
-Use vi or any text editor to add the following content to the files.
-
-2. Dockerfile Content:
-
-dockerfile
-
-![image](https://github.com/user-attachments/assets/c9db6744-d03a-48f7-aafd-39f11250c0eb)
+Docker Hub account
+AWS EC2 instance (Ubuntu preferred)
+Jenkins installed on your EC2 instance
+Node.js and npm installed on your local machine
+GitHub account for version control
+Jenkins plugins: Docker Pipeline, SSH Agent, Git Plugin
+Setup Instructions
+Clone the repository:
 
 
-3. Jenkinsfile Content:
+git clone https://github.com/yourusername/project-name.git
+cd project-name
 
-![image](https://github.com/user-attachments/assets/2dbc9277-ae90-498b-a0d7-4a591ec804a2)
-  ![image](https://github.com/user-attachments/assets/0a1f5cd4-d2de-4fa7-acc7-dd0adef03dbc)
+**Jenkins Setup:**
 
+Install Jenkins on your EC2 instance.
+Install the necessary plugins: Docker Pipeline, SSH Agent, and Git.
+Configure credentials for Docker Hub in Jenkins (under Manage Jenkins > Manage Credentials).
+Configure SSH access to your EC2 instance for deployment.
 
-4. Commit and Push Changes to GitHub:
+**Docker Setup:**
 
-git add Dockerfile Jenkinsfile
-git commit -m "Added Dockerfile and Jenkinsfile"
-git push origin main
+Ensure Docker is installed and running on your EC2 instance.
 
-6. Set Up Jenkins Pipeline:
-Create a New Pipeline Job in Jenkins:
+Build the Docker image for your Node.js app using the Dockerfile in the repo:
 
-Open your Jenkins dashboard.
-Click on "New Item".
-Enter the job name (e.g., "Docker Jenkins Pipeline").
-Select "Pipeline" as the project type and click "OK".
-Under "Build Triggers":
-Scroll down to the "Build Triggers" section.
-Check the box for "GitHub hook trigger for GITScm polling". This ensures the pipeline triggers automatically when you push code to your GitHub repository.
-Write the Pipeline Script:
-In the "Pipeline" section, select "Pipeline script" and paste the following script( Jenkinsfile)
-Save the Pipeline:
-Click "Save" to store your pipeline configuration.
+docker build -t my-nodejs-app .
 
-<img width="609" alt="build success" src="https://github.com/user-attachments/assets/de9761ce-f451-4288-a791-ee8e70d0fd93">
+**Pipeline Configuration:**
 
-<img width="795" alt="jenkins pipeline success" src="https://github.com/user-attachments/assets/79ea4e40-b339-4fdf-a2ab-6e090ac66525">
+Create a Jenkins Pipeline Job.
+Add the Jenkinsfile from this repository to define the pipeline stages.
 
-6. Configure GitHub Webhook:
+**Pipeline Stages**
+The Jenkins pipeline consists of the following stages:
 
-Go to your GitHub repository settings.
-Under "Webhooks", click "Add webhook".
-Enter the Jenkins URL followed by /github-webhook/ (e.g., http://your-jenkins-url/github-webhook/).
+Checkout: Clones the GitHub repository.
+Build: Builds the Docker image for the Node.js application.
+Test: Runs basic tests (e.g., npm test).
+Push to Docker Hub: Pushes the Docker image to Docker Hub.
+Deploy to EC2: Deploys the application to an EC2 instance via SSH.
 
-7. Testing the Automation:
+**Jenkinsfile and Dockerfile**
 
-Make a change in the repository (e.g., update the README).
-Commit and push the change. Jenkins should automatically trigger the pipeline.
+Jenkinsfile
+The Jenkinsfile defines the pipeline stages in a declarative syntax:
 
-<img width="557" alt="automate CI trigger" src="https://github.com/user-attachments/assets/bb1dc9ec-946f-45df-9b62-4b857197f0d1">
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/yourusername/project-name.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker build -t my-nodejs-app .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                        docker.image('yourusername/my-nodejs-app:latest').push()
+                    }
+                }
+            }
+        }
+        stage('Deploy to EC2') {
+            steps {
+                sshagent (credentials: ['ec2-ssh-credentials']) {
+                    sh '''
+                    ssh ubuntu@your-ec2-ip << EOF
+                        docker stop my-nodejs-app || true
+                        docker rm my-nodejs-app || true
+                        docker run -d -p 80:3000 my-nodejs-app
+                    EOF
+                    '''
+                }
+            }
+        }
+    }
+}
 
-Outcome:
+Dockerfile
+The Dockerfile defines how the Node.js application will be containerized:
 
-This project automated the process of building a Docker image, running a simple Node.js application, and pushing the image to Docker Hub using Jenkins Declarative Pipeline and webhooks. The integration of GitHub webhooks ensures the process is fully automated upon every code change.
+FROM node:14
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD [ "node", "app.js" ]
 
-<img width="928" alt="Dockerhub" src="https://github.com/user-attachments/assets/cef5def4-9872-4f95-b7f6-f64e1f454013">
+**Usage**
+Push code to GitHub to trigger the Jenkins pipeline.
+Jenkins will automatically execute the pipeline: build, test, push to Docker Hub, and deploy to EC2.
+After successful deployment, access the Node.js app on your EC2 instance’s public IP address.
 
-![image](https://github.com/user-attachments/assets/f42d76f5-484c-49aa-8f92-73011436772a)
+**Troubleshooting**
+Here are some common issues and their solutions:
 
-Troubleshooting:
+Permissions Errors: Fix: Ensure the correct permissions are set for directories in Docker by running:
 
-Git Checkout Issues: If Jenkins fails to fetch the repository, ensure the correct branch is specified and the repository URL is correct.
-Docker Build Errors: Ensure Docker is correctly configured in Jenkins and that the Dockerfile syntax is valid.
-Webhook Not Triggering: Double-check the webhook URL in GitHub and make sure Jenkins is accessible from GitHub.
+RUN chown -R node:node /usr/src/app
+Docker Push Error (Access Denied): Fix: Ensure the Docker credentials are correctly configured in Jenkins, and the image tag matches in both build and push stages.
 
-Conclusion:
+EOF Command Error: Fix: Correct the EOF block format in the Jenkins pipeline by ensuring there are no extra characters or misplaced EOFs:
 
-This project provided hands-on experience in setting up a fully automated CI/CD pipeline using Jenkins, Docker, and GitHub. The integration of webhooks showcases how continuous integration can be achieved efficiently, enabling seamless deployments.
-<<<<<<< HEAD
-Triggering webhook
-Triggering webhook
-Triggering webhook
-Triggering webhook
-Triggering webhook
-Triggering webhook
-Triggering webhook
-Triggering webhook
-=======
+sh '''
+ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
+    # Commands to stop and deploy containers
+EOF
+'''
+Docker Login Command Issue: Fix: Use single quotes around the password if it contains special characters:
 
->>>>>>> d056a67a306ed6a37dcfc98ffa6fdaf0bdf195c8
-Triggering webhook
-Triggering webhook
+docker login -u username -p 'password'
+Node.js Version Inconsistency: Fix: Standardize the Node.js version in your Dockerfile to match the development environment.
+
+**Contributing**
+Contributions are welcome! Feel free to fork the repository and submit a pull request with your improvements or bug fixes.
+
+**License**
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+**Contact**
+For any questions or issues, please raise a GitHub issue or contact me at sandhya.bca7@gmail.com.
