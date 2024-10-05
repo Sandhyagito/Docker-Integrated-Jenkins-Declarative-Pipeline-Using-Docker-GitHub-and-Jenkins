@@ -55,7 +55,7 @@ Build the Docker image for your Node.js app using the Dockerfile in the repo:
 docker build -t my-nodejs-app .
 ```
 ### 4. Pipeline Configuration:
-5. 
+
 Create a Jenkins Pipeline Job.
 Add the Jenkinsfile from this repository to define the pipeline stages.
 
@@ -69,8 +69,10 @@ This project uses a Jenkinsfile to automate the CI/CD process for the Node.js we
 - **Push to Docker Hub**: Pushes the Docker image to Docker Hub for deployment.
 - **Deploy to EC2**: Deploys the application(container) to an EC2 instance via SSH.
 
-Jenkinsfile and Dockerfile
-Jenkinsfile
+### Jenkinsfile and Dockerfile
+
+## Jenkinsfile
+
 The Jenkinsfile defines the pipeline stages in a declarative syntax:
 
 ```bash
@@ -118,7 +120,8 @@ pipeline {
 }
 ```
 
-Dockerfile
+## Dockerfile
+
 The Dockerfile defines how the Node.js application will be containerized:
 
 ```bash
@@ -135,8 +138,6 @@ CMD [ "node", "app.js" ]
 Push code to GitHub to trigger the Jenkins pipeline.
 Jenkins will automatically execute the pipeline: build, test, push to Docker Hub, and deploy to EC2.
 After successful deployment, access the Node.js app on your EC2 instance’s public IP address.
-Troubleshooting
-Here are some common issues and their solutions:
 
 ### Contributing
 Contributions are welcome! Feel free to fork the repository and submit a pull request with your improvements or bug fixes.
